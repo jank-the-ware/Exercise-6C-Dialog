@@ -30,8 +30,20 @@ public class BasicInkExample : MonoBehaviour {
         story.BindExternalFunction("talktoGuil", (bool guilTalk) => {
             Variables.Scene(SceneManager.GetActiveScene()).Set("guilTalk", true);
         });
+        story.BindExternalFunction("talktoGuil2", (bool guilTalk2) => {
+            Variables.Scene(SceneManager.GetActiveScene()).Set("guilTalk2", true);
+        });
+        story.BindExternalFunction("talktoHele", (bool heleTalk) => {
+            Variables.Scene(SceneManager.GetActiveScene()).Set("heleTalk", true);
+        });
+        story.BindExternalFunction("guilDone", (bool guilTalkDone) => {
+            Variables.Scene(SceneManager.GetActiveScene()).Set("guilTalkDone", true);
+        });
         story.BindExternalFunction("goToBed", (bool endDay) => {
             Variables.Scene(SceneManager.GetActiveScene()).Set("endDay", true);
+        });
+        story.BindExternalFunction("leaveForever", (bool bye) => {
+            Variables.Scene(SceneManager.GetActiveScene()).Set("bye", true);
         });
 
         if (OnCreateStory != null) OnCreateStory(story);
@@ -117,8 +129,8 @@ public class BasicInkExample : MonoBehaviour {
 	// Destroys all the children of this gameobject (all the UI)
 	void RemoveChildren () {
 		int childCount = canvas.transform.childCount;
-		for (int i = childCount - 1; i >= 0; --i) {
-			Destroy (canvas.transform.GetChild (i).gameObject);
+		for (int i = childCount - 1; i >= 2; --i) {
+			Destroy(canvas.transform.GetChild(i).gameObject);
 		}
 	}
 
