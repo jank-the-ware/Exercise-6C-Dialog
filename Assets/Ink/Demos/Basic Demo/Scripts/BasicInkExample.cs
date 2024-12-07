@@ -3,6 +3,9 @@ using Ink.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
+
 // This is a super bare bones example of how to play and display a ink story in Unity.
 public class BasicInkExample : MonoBehaviour {
     public static event Action<Story> OnCreateStory;
@@ -18,6 +21,19 @@ public class BasicInkExample : MonoBehaviour {
 		RemoveChildren();
 
 		story = new Story(characterDialog.text);
+		story.BindExternalFunction("addPopularity", (int popularity) => {
+			Variables.Scene(SceneManager.GetActiveScene()).Set("popularity", popularity + Variables.Scene(SceneManager.GetActiveScene()).Get<int>("popularity"));
+		});
+        story.BindExternalFunction("talktoCorv", (bool corvTalk) => {
+            Variables.Scene(SceneManager.GetActiveScene()).Set("corvTalk", true);
+        });
+        story.BindExternalFunction("talktoGuil", (bool guilTalk) => {
+            Variables.Scene(SceneManager.GetActiveScene()).Set("guilTalk", true);
+        });
+        story.BindExternalFunction("goToBed", (bool endDay) => {
+            Variables.Scene(SceneManager.GetActiveScene()).Set("endDay", true);
+        });
+
         if (OnCreateStory != null) OnCreateStory(story);
         RefreshView();
     }
